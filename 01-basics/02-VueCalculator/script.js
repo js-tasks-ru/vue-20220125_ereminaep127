@@ -10,23 +10,19 @@ const Counter = {
         }
     },
     methods: {
-        calc() {
-            switch(this.motion) {
-                case 'sum':
-                    this.result=this.number1 + this.number2
-                    break;
-                case 'subtract':
-                    this.result=this.number1-this.number2
-                    break;
-                case 'divide':
-                    this.result=this.number1/this.number2
-                    break; 
-                case 'multiply':
-                    this.result=this.number1*this.number2
-                    break;     
-                }
-            }
+        sum(a,b){
+            this.result=a+b
+        },
+        subtract(a,b) {
+            this.result=a-b
+        },
+        divide(a,b) {
+            this.result=a/b
+        },
+        multiply(a,b) {
+            this.result=a*b
         }
     }
+}
 
 createApp(Counter).mount('#app');

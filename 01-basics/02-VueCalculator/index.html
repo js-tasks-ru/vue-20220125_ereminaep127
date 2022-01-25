@@ -31,18 +31,18 @@
     <div id="app" class="container">
       <div class="row">
         <div class="col">
-          <input @input="calc" v-model="number1" type="number" />
+          <input v-model="number1" type="number" />
         </div>
 
         <div class="col" style="display: flex; flex-direction: column; font-family: emoji">
-          <label><input v-model="motion" @change="calc" type="radio" name="motion" value="sum" /> ➕</label>
-          <label><input v-model="motion" @change="calc" type="radio" name="motion" value="subtract" /> ➖</label>
-          <label><input v-model="motion" @change="calc" type="radio" name="motion" value="multiply" /> ✖</label>
-          <label><input v-model="motion" @change="calc" type="radio" name="motion" value="divide" /> ➗</label>
+          <label><input @input="sum(number1,number2)" type="radio" name="motion" value="sum" /> ➕</label>
+          <label><input @input="subtract(number1,number2)" type="radio" name="motion" value="subtract" /> ➖</label>
+          <label><input @input="multiply(number1,number2)" type="radio" name="motion" value="multiply" /> ✖</label>
+          <label><input @input="divide(number1,number2)" type="radio" name="motion" value="divide" /> ➗</label>
         </div>
 
         <div class="col">
-          <input @input="calc"  v-model="number2" type="number" />
+          <input v-model="number2" type="number" />
         </div>
 
         <div class="col">=</div>
