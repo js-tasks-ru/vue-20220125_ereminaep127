@@ -1,4 +1,4 @@
-// import { createApp } from './vendor/vue.esm-browser.js';
+import { createApp } from './vendor/vue.esm-browser.js';
 
 // From https://jsonplaceholder.typicode.com/comments
 const emails = [
@@ -30,3 +30,45 @@ const emails = [
 ];
 
 // Требуется создать Vue приложение
+
+const Counter = {
+  data() {
+    return {
+      search: '',
+      emails: emails,
+    };
+  },
+  computed: {
+    filtered() {
+      let result = [];
+      let search = this.search;
+      this.emails.forEach(function (item, index, array) {
+        result.push({
+          name: item,
+          active: !search ? false : Boolean(item.indexOf(search) + 1),
+        });
+      });
+      return result;
+    },
+  },
+  methods: {
+    calc() {
+      switch (this.motion) {
+        case 'sum':
+          this.result = this.number1 + this.number2;
+          break;
+        case 'subtract':
+          this.result = this.number1 - this.number2;
+          break;
+        case 'divide':
+          this.result = this.number1 / this.number2;
+          break;
+        case 'multiply':
+          this.result = this.number1 * this.number2;
+          break;
+      }
+    },
+  },
+};
+
+createApp(Counter).mount('#app');
