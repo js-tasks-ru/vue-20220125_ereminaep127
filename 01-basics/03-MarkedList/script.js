@@ -31,7 +31,7 @@ const emails = [
 
 // Требуется создать Vue приложение
 
-const Counter = {
+const Email = {
   data() {
     return {
       search: '',
@@ -50,25 +50,7 @@ const Counter = {
       });
       return result;
     },
-  },
-  methods: {
-    calc() {
-      switch (this.motion) {
-        case 'sum':
-          this.result = this.number1 + this.number2;
-          break;
-        case 'subtract':
-          this.result = this.number1 - this.number2;
-          break;
-        case 'divide':
-          this.result = this.number1 / this.number2;
-          break;
-        case 'multiply':
-          this.result = this.number1 * this.number2;
-          break;
-      }
-    },
-  },
+  }
 };
 
-createApp(Counter).mount('#app');
+createApp(Email).mount('#app');
