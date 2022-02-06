@@ -10,7 +10,7 @@ export default defineComponent({
 
     data() {
         return {
-            meetup: {},
+            meetup: null,
             load: true,
             error: false
         }
@@ -57,14 +57,14 @@ export default defineComponent({
 
     template: `
     <div class="page-meetup">
-      <meetup-view v-if="Object.keys(meetup).length&&!load&&!error" :meetup="meetup"></meetup-view>
+      <meetup-view v-if="meetup&&!load&&!error" :meetup="meetup"></meetup-view>
 
       <ui-container v-if="load">
         <ui-alert>Загрузка...</ui-alert>
       </ui-container>
 
       <ui-container v-if="error">
-        <ui-alert>{{error}}</ui-alert>
+        <ui-alert>{{ error }}</ui-alert>
       </ui-container>
     </div>`,
 });

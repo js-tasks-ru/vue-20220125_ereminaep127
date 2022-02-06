@@ -34,15 +34,15 @@ export default defineComponent({
     <ul class="meetup-info">
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-user.svg" />
-        {{organizer}}
+        {{ organizer }}
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-map.svg" />
-        {{place}}
+        {{ place }}
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time :datetime="dataFormat.value">{{dataFormat.format}}</time>
+        <time :datetime="dataFormat.value">{{ dataFormat.format }}</time>
       </li>
     </ul>`,
 });
