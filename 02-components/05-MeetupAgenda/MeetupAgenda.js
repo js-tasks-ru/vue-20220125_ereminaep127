@@ -7,7 +7,7 @@ export default defineComponent({
     props: {
         agenda: {
             type: Array,
-            default: []
+            default: () => []
         }
     },
     template: `
