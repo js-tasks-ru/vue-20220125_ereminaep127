@@ -23,6 +23,15 @@
         <ui-icon v-if="option.icon" :icon="option.icon" @click="this.opened=!this.opened" class="dropdown__icon" />
         {{ option.text }}
       </button>
+      <select class="hiddenSelect"  v-model="currentModelValue">
+        <option
+          v-for="option in options"
+          :key="option.value"
+          :value="option.value"
+          >
+          {{ option.text }}
+        </option>
+      </select>
     </div>
   </div>
 </template>
@@ -49,11 +58,7 @@ export default {
   data(){
     return {
       opened:false,
-      currentOption:{
-        text:'',
-        value:this.modelValue,
-        icon:''
-      }
+      currentModelValue:this.modelValue
     }
   },
   computed:{
@@ -74,6 +79,11 @@ export default {
     hasIcon(){
       let count=this.options.filter(item=>('icon' in item)).length;
       return Boolean(count);
+    }
+  },
+  watch:{
+    currentModelValue(value) {
+      this.$emit('update:modelValue',value);
     }
   },
   methods:{
@@ -199,5 +209,8 @@ export default {
   top: 50%;
   left: 16px;
   transform: translate(0, -50%);
+}
+.hiddenSelect{
+  display:none;
 }
 </style>
