@@ -1,18 +1,27 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div
+    class="dropdown"
+    :class="{'dropdown_opened':opened}">
+    <button
+      type="button"
+      @click="this.opened=!this.opened"
+      class="dropdown__toggle"
+      :class="{'dropdown__toggle_icon':hasIcon}">
+      <ui-icon v-if="icon" :icon="icon" class="dropdown__icon" />
+      <span>{{ heading }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div class="dropdown__menu" role="listbox" v-show="opened">
+      <button
+        v-for="option in options"
+        :key="option.value"
+        @click="selectEvent(option.value)"
+        class="dropdown__item"
+        :class="{'dropdown__item_icon':hasIcon}"
+        role="option"
+        type="button">
+        <ui-icon v-if="option.icon" :icon="option.icon" @click="this.opened=!this.opened" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
   </div>
@@ -23,8 +32,56 @@ import UiIcon from './UiIcon';
 
 export default {
   name: 'UiDropdown',
-
   components: { UiIcon },
+  props:{
+    options:{
+      type:Array,
+      required:true
+    },
+    modelValue:{
+      type:String,
+      default:''
+    },
+    title:{
+      type:String
+    }
+  },
+  data(){
+    return {
+      opened:false,
+      currentOption:{
+        text:'',
+        value:this.modelValue,
+        icon:''
+      }
+    }
+  },
+  computed:{
+    heading(){
+      if(this.modelValue) {
+        return this.options.filter(item=>item.value==this.modelValue)[0].text;
+      } else {
+        return this.title
+      }
+    },
+    icon(){
+      if(this.modelValue) {
+        return this.options.filter(item=>item.value==this.modelValue)[0].icon;
+      } else {
+        return ''
+      }
+    },
+    hasIcon(){
+      let count=this.options.filter(item=>('icon' in item)).length;
+      return Boolean(count);
+    }
+  },
+  methods:{
+    selectEvent(value){
+      this.$emit('update:modelValue',value);
+      this.opened=!this.opened;
+    }
+  }
 };
 </script>
 
