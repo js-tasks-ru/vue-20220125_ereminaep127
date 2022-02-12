@@ -1,12 +1,15 @@
 <template>
   <h1 class="logo">
-    <a href="/" class="logo__link"
-      ><img src="@/assets/logo.svg" alt="Meetups" class="logo__image" width="174" height="30"
-    /></a>
+    <router-link class="logo__link" :to="{name:'home'}">
+      <img src="@/assets/logo.svg" alt="Meetups" class="logo__image" width="174" height="30"/>
+    </router-link>
   </h1>
 </template>
 
 <script>
+
+import routes from '../router'
+
 export default {
   name: 'MeetupsLogo',
 };
