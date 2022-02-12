@@ -29,23 +29,20 @@ export default {
     }
   },
   methods:{
-    addToast(message,type,time){
+    addToast(message,type){
       this.toasts.push({
         id:this.id,
         message:message,
         type:type
       });
-      setTimeout(() => this.hideToast(this.id), time);
+      setTimeout(() => { this.toasts.shift() }, 5000);
       this.id++;
     },
-    hideToast(id){
-      this.toasts.pop();
-    },
     error(message){
-      this.addToast(message,'error',5000);
+      this.addToast(message,'error');
     },
     success(message){
-      this.addToast(message,'success',5000);
+      this.addToast(message,'success');
     }
   }
 };
