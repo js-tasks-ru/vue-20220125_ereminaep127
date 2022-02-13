@@ -1,6 +1,6 @@
 <template>
   <div class="toast" :class='`toast_${type}`'>
-    <ui-icon class="toast__icon" :icon="icon" />
+    <ui-icon class="toast__icon" :icon="$options.settings.icons[type]" />
     <span>{{ message }}</span>
   </div>
 </template>
@@ -10,6 +10,12 @@ import UiIcon from './UiIcon';
 
 export default {
   name: 'Toast',
+  settings:{
+      icons:{
+      success:'check-circle',
+      error:'alert-circle'
+    }
+  },
   props:{
     message:{
       type:String

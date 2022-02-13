@@ -23,10 +23,11 @@
         <ui-icon v-if="option.icon" :icon="option.icon" @click="this.opened=!this.opened" class="dropdown__icon" />
         {{ option.text }}
       </button>
-      <select class="hiddenSelect"  v-model="currentModelValue">
+      <select class="hiddenSelect" @change="this.$emit('update:modelValue',$event.target.value)">
         <option
           v-for="option in options"
           :key="option.value"
+          :selected="option.value==modelValue"
           :value="option.value"
           >
           {{ option.text }}
@@ -57,8 +58,7 @@ export default {
   },
   data(){
     return {
-      opened:false,
-      currentModelValue:this.modelValue
+      opened:false
     }
   },
   computed:{
@@ -77,13 +77,7 @@ export default {
       }
     },
     hasIcon(){
-      let count=this.options.filter(item=>('icon' in item)).length;
-      return Boolean(count);
-    }
-  },
-  watch:{
-    currentModelValue(value) {
-      this.$emit('update:modelValue',value);
+      return this.options.some(item=>('icon' in item));
     }
   },
   methods:{
