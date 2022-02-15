@@ -4,7 +4,7 @@
     :class="{'dropdown_opened':opened}">
     <button
       type="button"
-      @click="this.opened=!this.opened"
+      @click="opened=!opened"
       class="dropdown__toggle"
       :class="{'dropdown__toggle_icon':hasIcon}">
       <ui-icon v-if="icon" :icon="icon" class="dropdown__icon" />
@@ -20,10 +20,10 @@
         :class="{'dropdown__item_icon':hasIcon}"
         role="option"
         type="button">
-        <ui-icon v-if="option.icon" :icon="option.icon" @click="this.opened=!this.opened" class="dropdown__icon" />
+        <ui-icon v-if="option.icon" :icon="option.icon" @click="opened=!opened" class="dropdown__icon" />
         {{ option.text }}
       </button>
-      <select class="hiddenSelect" @change="this.$emit('update:modelValue',$event.target.value)">
+      <select class="hiddenSelect" @change="$emit('update:modelValue',$event.target.value)">
         <option
           v-for="option in options"
           :key="option.value"

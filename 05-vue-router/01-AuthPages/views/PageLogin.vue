@@ -37,7 +37,7 @@ export default {
   methods: {
     handleSubmit() {
       if(this.$route.query.from) {
-        this.$router.push({name:'register'})
+        this.$router.push({path:this.$route.query.from})
       } else {
         this.$router.push({name:'home'})
       }
