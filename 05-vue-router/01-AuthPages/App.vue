@@ -3,21 +3,22 @@
     <meetups-header />
     <main class="main">
       <div>CURRENT PAGE</div>
+      <router-view></router-view>
     </main>
     <meetups-footer />
   </div>
 </template>
 
 <script>
-import MeetupsHeader from './components/MeetupsHeader';
 import MeetupsFooter from './components/MeetupsFooter';
+import MeetupsHeader from './components/MeetupsHeader';
 
 export default {
   name: 'App',
 
   components: {
     MeetupsFooter,
-    MeetupsHeader,
+    MeetupsHeader
   },
 };
 </script>
