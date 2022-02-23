@@ -77,14 +77,6 @@ export default {
       if (this.multiline) return 'textarea';
       return 'input';
     },
-    modelValueProxy: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit('update:modelValue', value);
-      },
-    },
   },
   methods: {
     focus() {
