@@ -1,34 +1,39 @@
 <template>
-  <div class="input-group"
+  <div
+    class="input-group"
     :class="{
-      'input-group_icon':this.$slots['left-icon']||this.$slots['right-icon'],
-      'input-group_icon-left':this.$slots['left-icon'],
-      'input-group_icon-right':this.$slots['right-icon']
+      'input-group_icon': $slots['left-icon'] || $slots['right-icon'],
+      'input-group_icon-left': $slots['left-icon'],
+      'input-group_icon-right': $slots['right-icon'],
     }"
   >
-    <div class="input-group__icon" v-if="this.$slots['left-icon']">
+    <div v-if="$slots['left-icon']" class="input-group__icon">
       <slot name="left-icon"></slot>
     </div>
-    {{model}}
     <textarea
       v-if="multiline"
       ref="input"
       v-bind="$attrs"
       v-model="modelValueProxy"
-      class="form-control" :class="{
-      'form-control_sm':small,
-      'form-control_rounded':rounded}"
+      class="form-control"
+      :class="{
+        'form-control_sm': small,
+        'form-control_rounded': rounded,
+      }"
     >
     </textarea>
     <input
       v-else
       ref="input"
       v-bind="$attrs"
-      class="form-control" :class="{
-      'form-control_sm':small,
-      'form-control_rounded':rounded
-      }"/>
-    <div class="input-group__icon" v-if="this.$slots['right-icon']">
+      v-model="modelValueProxy"
+      class="form-control"
+      :class="{
+        'form-control_sm': small,
+        'form-control_rounded': rounded,
+      }"
+    />
+    <div v-if="$slots['right-icon']" class="input-group__icon">
       <slot name="right-icon"></slot>
     </div>
   </div>
@@ -36,39 +41,33 @@
 
 <script>
 export default {
-  methods:{
-    focus(){
-      this.$refs['input'].focus();
-    }
-  },
   name: 'UiInput',
   inheritAttrs: false,
-  props:{
-    small:{
-      type:Boolean
+  props: {
+    small: {
+      type: Boolean,
     },
-    rounded:{
-      type:Boolean
+    rounded: {
+      type: Boolean,
     },
-    multiline:{
-      type:Boolean
+    multiline: {
+      type: Boolean,
     },
-    modelValue:{
-      type:String
+    modelValue: {
+      type: String,
     },
     modelModifiers: {
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   emits: ['update:modelValue'],
-  computed:{
-    tag(){
-      if(this.multiline) return 'textarea'
-      return 'input'
+  computed: {
+    tag() {
+      if (this.multiline) return 'textarea';
+      return 'input';
     },
-    model(){
-      console.log(this.modelModifiers?.lazy);
-      if(this.modelModifiers?.lazy) {
+    model() {
+      if (this.modelModifiers?.lazy) {
         return 'lazy';
       } else {
         return '';
@@ -84,7 +83,12 @@ export default {
         this.$emit('update:modelValue', value);
       },
     },
-  }
+  },
+  methods: {
+    focus() {
+      this.$refs['input'].focus();
+    },
+  },
 };
 </script>
 
