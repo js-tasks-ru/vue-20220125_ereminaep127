@@ -10,29 +10,27 @@
     <div v-if="$slots['left-icon']" class="input-group__icon">
       <slot name="left-icon"></slot>
     </div>
-    <textarea
-      v-if="multiline"
+    <component
+      :is="tag"
+      v-if="modelModifiers.lazy"
       ref="input"
       v-bind="$attrs"
-      v-model="modelValueProxy"
       class="form-control"
-      :class="{
-        'form-control_sm': small,
-        'form-control_rounded': rounded,
-      }"
+      :value="modelValue"
+      :class="options.class"
+      @change="$emit('update:modelValue', $event.target.value)"
     >
-    </textarea>
-    <input
+    </component>
+    <component
+      :is="tag"
       v-else
       ref="input"
       v-bind="$attrs"
-      v-model="modelValueProxy"
       class="form-control"
-      :class="{
-        'form-control_sm': small,
-        'form-control_rounded': rounded,
-      }"
-    />
+      :value="modelValue"
+      :class="options.class"
+      @input="$emit('update:modelValue', $event.target.value)"
+    ></component>
     <div v-if="$slots['right-icon']" class="input-group__icon">
       <slot name="right-icon"></slot>
     </div>
@@ -53,6 +51,9 @@ export default {
     multiline: {
       type: Boolean,
     },
+    value: {
+      type: String,
+    },
     modelValue: {
       type: String,
     },
@@ -61,25 +62,26 @@ export default {
     },
   },
   emits: ['update:modelValue'],
+  data() {
+    return {
+      options: {
+        class: {
+          'form-control_sm': this.small,
+          'form-control_rounded': this.rounded,
+        },
+      },
+    };
+  },
   computed: {
     tag() {
       if (this.multiline) return 'textarea';
       return 'input';
     },
-    model() {
-      if (this.modelModifiers?.lazy) {
-        return 'lazy';
-      } else {
-        return '';
-      }
-    },
     modelValueProxy: {
       get() {
-        // Значение в модель = значение параметра модели обёртки
         return this.modelValue;
       },
       set(value) {
-        // Изменение значения в модели = порождение события обновления модели обёртки
         this.$emit('update:modelValue', value);
       },
     },
