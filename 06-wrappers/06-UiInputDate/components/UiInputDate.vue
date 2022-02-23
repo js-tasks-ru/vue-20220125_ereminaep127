@@ -1,11 +1,14 @@
 <template>
-  {{ slots }}
   <ui-input
     v-model="modelValueProxy"
     v-bind="$attrs"
     :type="type"
     @input="$emit('update:modelValue', $event.target.valueAsNumber)"
-  />
+  >
+    <template v-for="slotName in Object.keys($slots)" #[slotName]>
+      <slot :name="slotName" />
+    </template>
+  </ui-input>
 </template>
 
 <script>
