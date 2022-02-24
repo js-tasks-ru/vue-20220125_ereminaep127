@@ -7,9 +7,7 @@
       @click="removeAction"
     >
       <span class="image-uploader__text">
-        <template v-if="state == 'loading'">Загрузка...</template>
-        <template v-else-if="state == 'remove'">Удалить изображение</template>
-        <template v-else-if="state == 'load'">Загрузить изображение</template>
+        <template>{{ text[state] }}</template>
       </span>
       <input
         type="file"
@@ -26,17 +24,14 @@
 </template>
 
 <script>
-import { toHandlers } from 'vue';
-
 export default {
   name: 'UiImageUploader',
   inheritAttrs: false,
   props: {
     preview: String,
     uploader: Function,
-    modelValue: String,
   },
-  emits: ['update:modelValue', 'remove', 'upload', 'error', 'select'],
+  emits: ['remove', 'upload', 'error', 'select'],
   data() {
     return {
       state: '',
@@ -47,9 +42,13 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(value) {
-        this.$emit('update:modelValue', value);
-      },
+    },
+    text() {
+      return {
+        loading: 'Загрузка...',
+        remove: 'Удалить изображение',
+        load: 'Загрузить изображение',
+      }
     },
   },
   created() {

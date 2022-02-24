@@ -29,11 +29,6 @@ export default {
     },
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      slots: {},
-    };
-  },
   computed: {
     modelValueProxy: {
       get() {
@@ -60,9 +55,6 @@ export default {
         this.$emit('update:modelValue', value);
       },
     },
-  },
-  created() {
-    this.slots = this.$slots;
   },
 };
 </script>

@@ -22,12 +22,7 @@ export default {
         return this.modelValue;
       },
       set(value) {
-        if (typeof value == 'boolean') {
-          this.$emit('update:modelValue', value);
-        } else {
-          console.log(value);
-          this.$emit('update:modelValue', value);
-        }
+        this.$emit('update:modelValue', value);
       },
     },
   },

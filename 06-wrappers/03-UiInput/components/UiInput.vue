@@ -12,24 +12,15 @@
     </div>
     <component
       :is="tag"
-      v-if="modelModifiers.lazy"
       ref="input"
       v-bind="$attrs"
       class="form-control"
       :value="modelValue"
-      :class="options.class"
-      @change="$emit('update:modelValue', $event.target.value)"
-    >
-    </component>
-    <component
-      :is="tag"
-      v-else
-      ref="input"
-      v-bind="$attrs"
-      class="form-control"
-      :value="modelValue"
-      :class="options.class"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :class="{
+        'form-control_sm': this.small,
+        'form-control_rounded': this.rounded,
+      }"
+      @[action]="$emit('update:modelValue', $event.target.value)"
     ></component>
     <div v-if="$slots['right-icon']" class="input-group__icon">
       <slot name="right-icon"></slot>
@@ -62,20 +53,17 @@ export default {
     },
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      options: {
-        class: {
-          'form-control_sm': this.small,
-          'form-control_rounded': this.rounded,
-        },
-      },
-    };
-  },
   computed: {
     tag() {
       if (this.multiline) return 'textarea';
       return 'input';
+    },
+    action() {
+      if(this.modelModifiers.lazy) {
+        return 'change'
+      } else {
+        return 'input'
+      }
     },
   },
   methods: {
