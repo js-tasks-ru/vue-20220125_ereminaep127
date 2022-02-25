@@ -25,8 +25,7 @@ export default {
       },
     },
     count: {
-      deep: true,
-      handler(newValue) {
+      handler() {
         this.localCount = this.count;
       },
     },
