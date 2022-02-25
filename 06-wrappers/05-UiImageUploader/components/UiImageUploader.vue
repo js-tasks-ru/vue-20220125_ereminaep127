@@ -1,8 +1,24 @@
 <template>
   <div class="image-uploader">
-    <label class="image-uploader__preview image-uploader__preview-loading" style="--bg-url: url('/link.jpeg')">
-      <span class="image-uploader__text">Загрузить изображение</span>
-      <input type="file" accept="image/*" class="image-uploader__input" />
+    <label
+      class="image-uploader__preview"
+      :class="{ 'image-uploader__preview-loading': state == 'loading' }"
+      :style="{ '--bg-url': preview ? 'url(' + preview + ')' : '' }"
+      @click="removeAction"
+    >
+      <span class="image-uploader__text">
+        <template>{{ text[state] }}</template>
+      </span>
+      <input
+        type="file"
+        accept="image/*"
+        :value="modelValueProxy"
+        v-bind="$attrs"
+        :disabled="state == 'loading'"
+        class="image-uploader__input"
+        @change="load"
+        @click="remove"
+      />
     </label>
   </div>
 </template>
@@ -10,6 +26,68 @@
 <script>
 export default {
   name: 'UiImageUploader',
+  inheritAttrs: false,
+  props: {
+    preview: String,
+    uploader: Function,
+  },
+  emits: ['remove', 'upload', 'error', 'select'],
+  data() {
+    return {
+      state: '',
+    };
+  },
+  computed: {
+    modelValueProxy: {
+      get() {
+        return this.modelValue;
+      },
+    },
+    text() {
+      return {
+        loading: 'Загрузка...',
+        remove: 'Удалить изображение',
+        load: 'Загрузить изображение',
+      }
+    },
+  },
+  created() {
+    this.state = this.preview ? 'remove' : 'load';
+  },
+  methods: {
+    removeAction(event) {
+      if (this.preview) {
+        this.$emit('remove');
+        this.state = 'load';
+        event.preventDefault();
+      }
+    },
+    load(event) {
+      let file = event.target.files[0];
+      if (file) {
+        this.$emit('select', file);
+        this.state = 'loading';
+        if (typeof this.uploader == 'function') {
+          this.uploader(file).then(
+            (file) => {
+              this.$emit('upload', file);
+              this.state = 'remove';
+            },
+            (result) => {
+              this.state = 'load';
+              this.$emit('error', result);
+            },
+          );
+        } else {
+          this.state = 'remove';
+        }
+      }
+    },
+    remove() {
+      this.$emit('remove');
+      this.state = 'load';
+    },
+  },
 };
 </script>
 
